@@ -6,6 +6,17 @@ An intelligent customer support agent that **detects customer personas** from th
 
 ---
 
+## ✨ Key Features
+
+- 🎭 **Persona Detection** — LLM-powered classification into 3 personas (technical expert, frustrated user, business executive) with confidence scoring
+- 📚 **RAG Knowledge Retrieval** — ChromaDB vector store with sentence-transformer embeddings for context-aware answers
+- 🎯 **Tone-Adaptive Responses** — Persona-specific system prompts that adjust language, detail level, and empathy
+- 🚨 **Smart Escalation** — Sentiment analysis + keyword detection with structured JSON handoff summaries for human agents
+- 🔄 **Rate-Limit Resilience** — Built-in retry logic with configurable backoff for API quota management
+- 🛡 **Graceful Degradation** — Every LLM call has fallback defaults so the agent never crashes on transient failures
+
+---
+
 ## 🏗 Architecture
 
 ```
@@ -183,16 +194,89 @@ All settings are configurable via environment variables (`.env` file):
 
 ---
 
-## 🧪 Example Queries
+## 🧪 Example Queries & Sample Output
 
 ### Technical Expert
 > "I'm getting a 429 Too Many Requests error when calling the /api/v2/orders endpoint. I've implemented exponential backoff but the Retry-After header is returning inconsistent values."
 
+<details>
+<summary>📋 Sample Output (click to expand)</summary>
+
+```json
+{
+  "persona": {
+    "detected": "technical_expert",
+    "confidence": 0.98,
+    "reasoning": "User references specific API endpoint, HTTP status code, SDK version, and technical concepts like exponential backoff."
+  },
+  "response": {
+    "persona_used": "technical_expert",
+    "text": "The /api/v2/orders endpoint enforces a sliding-window rate limit of 100 requests/min. The Retry-After header returns seconds until your window resets..."
+  },
+  "escalation": {
+    "should_escalate": false,
+    "sentiment_label": "neutral",
+    "sentiment_score": -0.10
+  }
+}
+```
+</details>
+
 ### Frustrated User
 > "This is absolutely ridiculous! Your service has been down for the third time this week and I can't access ANY of my data!"
 
+<details>
+<summary>📋 Sample Output (click to expand)</summary>
+
+```json
+{
+  "persona": {
+    "detected": "frustrated_user",
+    "confidence": 1.0,
+    "reasoning": "User expresses strong anger, frustration, and urgency with emotional language and capitalization."
+  },
+  "response": {
+    "persona_used": "frustrated_user",
+    "text": "I completely understand your frustration, and I sincerely apologize for the repeated disruptions..."
+  },
+  "escalation": {
+    "should_escalate": true,
+    "sentiment_label": "very_negative",
+    "sentiment_score": -0.90
+  },
+  "handoff": {
+    "suggested_priority": "P1 — Critical",
+    "escalation_reasons": ["Very negative sentiment detected (score=-0.90)"]
+  }
+}
+```
+</details>
+
 ### Business Executive
 > "I'm the VP of Operations evaluating your platform for 200 employees. What's the pricing impact if we move to your Enterprise plan?"
+
+<details>
+<summary>📋 Sample Output (click to expand)</summary>
+
+```json
+{
+  "persona": {
+    "detected": "business_executive",
+    "confidence": 1.0,
+    "reasoning": "User identifies as VP, discusses company-wide evaluation, and focuses on pricing and ROI."
+  },
+  "response": {
+    "persona_used": "business_executive",
+    "text": "For a 200-employee deployment on our Enterprise plan, here's your cost breakdown and expected ROI..."
+  },
+  "escalation": {
+    "should_escalate": false,
+    "sentiment_label": "neutral",
+    "sentiment_score": 0.0
+  }
+}
+```
+</details>
 
 ---
 
