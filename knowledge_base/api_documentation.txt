@@ -1,0 +1,51 @@
+API Documentation — Acme Cloud Platform
+========================================
+
+Authentication
+--------------
+All API requests require a Bearer token in the Authorization header.
+Tokens are issued via POST /auth/token with your client_id and client_secret.
+Tokens expire after 3600 seconds (1 hour). Refresh using POST /auth/refresh.
+
+Common Error Codes:
+- 401 Unauthorized: Invalid or expired token. Re-authenticate.
+- 403 Forbidden: The token lacks the required scope. Check your API key permissions.
+- 429 Too Many Requests: Rate limit exceeded. Default rate limit is 100 req/min.
+  Use exponential backoff with jitter. Check the Retry-After header.
+- 500 Internal Server Error: Transient server-side failure. Retry with backoff.
+- 503 Service Unavailable: The service is temporarily down for maintenance.
+
+REST Endpoints
+--------------
+GET  /api/v2/users          — List users (paginated, default 50 per page)
+POST /api/v2/users          — Create a new user
+GET  /api/v2/users/{id}     — Retrieve user by ID
+PUT  /api/v2/users/{id}     — Update user
+DELETE /api/v2/users/{id}   — Delete user (soft-delete; recoverable within 30 days)
+
+GET  /api/v2/orders         — List orders with optional filters: status, date_range
+POST /api/v2/orders         — Create order (requires items[] array)
+GET  /api/v2/orders/{id}    — Retrieve order details including line items
+
+Webhooks
+--------
+Configure webhooks at Settings → Integrations → Webhooks.
+Supported events: order.created, order.updated, user.created, payment.completed.
+Webhook payloads are signed with HMAC-SHA256. Verify using your webhook_secret.
+Retry policy: 3 attempts with exponential backoff (1 min, 5 min, 30 min).
+
+SDK Support
+-----------
+Official SDKs available for Python, Node.js, Java, and Go.
+Python SDK: `pip install acme-cloud-sdk`
+Quick start:
+    from acme_cloud import Client
+    client = Client(api_key="your-key")
+    users = client.users.list(limit=10)
+
+Debugging Tips
+--------------
+- Enable verbose logging: set ACME_LOG_LEVEL=DEBUG
+- Use the /healthcheck endpoint to verify service status.
+- Include X-Request-ID header for easier tracing in support tickets.
+- Check the status page at https://status.acme.cloud for ongoing incidents.

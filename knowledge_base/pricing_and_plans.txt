@@ -1,0 +1,69 @@
+Pricing & Plans — Acme Cloud Platform
+=======================================
+
+Plan Overview
+-------------
+Acme Cloud offers three tiers designed for different business needs:
+
+1. Starter Plan — $29/month
+   - Up to 5 team members
+   - 10,000 API calls/month
+   - 1 GB storage
+   - Email support (48-hour response)
+   - Basic analytics dashboard
+   - Community forum access
+
+2. Professional Plan — $99/month
+   - Up to 25 team members
+   - 100,000 API calls/month
+   - 10 GB storage
+   - Priority email support (12-hour response)
+   - Advanced analytics & reporting
+   - Webhook integrations
+   - SSO (SAML 2.0)
+   - 99.9% uptime SLA
+
+3. Enterprise Plan — Custom pricing (starting ~$499/month)
+   - Unlimited team members
+   - Unlimited API calls
+   - 100 GB+ storage (scalable)
+   - Dedicated support manager
+   - Phone & chat support (1-hour response)
+   - Custom integrations
+   - Advanced security (SOC 2, HIPAA compliance)
+   - 99.99% uptime SLA
+   - On-premises deployment option
+   - Quarterly business reviews
+
+Annual Billing Discount
+-----------------------
+All plans offer a 20% discount when billed annually.
+- Starter: $278/year (save $70)
+- Professional: $950/year (save $238)
+- Enterprise: Contact sales for annual pricing
+
+ROI & Business Impact
+---------------------
+Customers on the Professional plan report:
+- 40% reduction in manual data-processing time
+- 3x faster integration deployment
+- Average payback period: 2.5 months
+- 60% fewer support tickets after onboarding
+
+Enterprise customers report:
+- $150,000+ annual savings from automation
+- 50% reduction in infrastructure costs
+- Improved compliance posture reducing audit costs by 35%
+- 99.99% uptime resulting in near-zero revenue loss from downtime
+
+Add-Ons
+-------
+- Extra API calls: $5 per 10,000 calls
+- Extra storage: $2 per GB/month
+- Premium support: +$49/month (adds chat support, 4-hour response)
+- Advanced security pack: +$99/month (HIPAA, SOC 2, encryption at rest)
+
+Free Trial
+----------
+14-day free trial of the Professional plan. No credit card required.
+Trial includes full feature access. Data is preserved if you upgrade.

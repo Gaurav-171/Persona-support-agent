@@ -1,0 +1,47 @@
+Troubleshooting Guide — Acme Cloud Platform
+=============================================
+
+Issue: Service is slow or unresponsive
+---------------------------------------
+1. Check https://status.acme.cloud for known incidents.
+2. Verify your internet connection and DNS resolution.
+3. Test with curl: `curl -w "%{time_total}" https://api.acme.cloud/healthcheck`
+4. If latency > 2s, the issue may be regional. Try switching to a different
+   data center region in Settings → Infrastructure → Region.
+5. Clear local caches and restart your application.
+6. Contact support if the issue persists for more than 15 minutes.
+
+Issue: Login failures / "Invalid credentials"
+----------------------------------------------
+1. Verify your email address is correct (case-sensitive).
+2. Reset your password at https://app.acme.cloud/reset-password.
+3. Check if your account is locked after 5 failed attempts — wait 30 minutes.
+4. Ensure MFA (multi-factor authentication) codes are synced with the correct time.
+5. Try logging in from an incognito/private browser window.
+6. If SSO is configured, verify your IdP settings.
+
+Issue: API returning 500 errors
+-------------------------------
+1. Check the status page for any ongoing service disruptions.
+2. Review the response body — it may contain a trace_id for support.
+3. Verify your request payload matches the API schema (see API docs).
+4. Test with a minimal payload to isolate the issue.
+5. If using the SDK, update to the latest version.
+6. Report persistent 500 errors to support@acme.cloud with the trace_id.
+
+Issue: Data not syncing between services
+-----------------------------------------
+1. Check webhook delivery logs at Settings → Integrations → Webhooks → Logs.
+2. Verify the webhook endpoint is reachable and returns 200.
+3. Ensure event types are correctly subscribed.
+4. Data sync can take up to 60 seconds in normal conditions.
+5. If using batch imports, check the import job status via GET /api/v2/jobs/{id}.
+6. For real-time needs, consider using the Streaming API (WebSocket).
+
+Issue: Billing discrepancies
+-----------------------------
+1. Review your usage dashboard at Settings → Billing → Usage.
+2. Compare with the invoices at Settings → Billing → Invoices.
+3. Overages are billed at the end of each billing cycle.
+4. Free tier includes 10,000 API calls/month and 1 GB storage.
+5. Contact billing@acme.cloud for disputes — include invoice ID and details.
